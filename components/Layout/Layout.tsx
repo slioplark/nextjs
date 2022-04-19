@@ -1,8 +1,12 @@
 import styles from '@styles/Home.module.css'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import Footer from './Footer'
 
-const Layout: React.FC = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className={styles.container}>
       {children}
