@@ -3,9 +3,11 @@
 import type { SvgIconComponent } from "@mui/icons-material";
 import ApiOutlinedIcon from "@mui/icons-material/ApiOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
+  Avatar,
   Box,
   Drawer,
   IconButton,
@@ -13,11 +15,13 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 
 const drawerWidth = 252;
@@ -28,7 +32,11 @@ const navItems: { label: string; href: string; icon: SvgIconComponent }[] = [
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [accountMenuAnchor, setAccountMenuAnchor] = useState<HTMLElement | null>(null);
+  const router = useRouter();
   const pathname = usePathname();
+  const accountName = "使用者";
+  const showAccountMenu = pathname !== "/login";
 
   const drawer = (
     <Box sx={{ height: "100%", bgcolor: "background.paper" }}>
@@ -162,6 +170,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
       </Box>
       <Box
         sx={{
+          position: "relative",
           flexGrow: 1,
           minWidth: 0,
           px: { xs: 2, sm: 3, lg: 5 },
@@ -169,6 +178,50 @@ export default function AppShell({ children }: { children: ReactNode }) {
         }}
         component="main"
       >
+        {showAccountMenu && (
+          <>
+            <Avatar
+              sx={{
+                position: "absolute",
+                top: 12,
+                right: { xs: 16, sm: 24, lg: 40 },
+                width: 36,
+                height: 36,
+                border: 0,
+                bgcolor: "primary.main",
+                fontSize: 14,
+                cursor: "pointer",
+              }}
+              component="button"
+              aria-label="開啟帳戶選單"
+              aria-haspopup="menu"
+              aria-expanded={Boolean(accountMenuAnchor)}
+              onClick={(event) => setAccountMenuAnchor(event.currentTarget)}
+            >
+              {accountName.slice(0, 1)}
+            </Avatar>
+            <Menu
+              anchorEl={accountMenuAnchor}
+              open={Boolean(accountMenuAnchor)}
+              onClose={() => setAccountMenuAnchor(null)}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+              <MenuItem disabled>{accountName}</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setAccountMenuAnchor(null);
+                  router.push("/login");
+                }}
+              >
+                <ListItemIcon>
+                  <LogoutOutlinedIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>登出</ListItemText>
+              </MenuItem>
+            </Menu>
+          </>
+        )}
         {children}
       </Box>
     </Box>

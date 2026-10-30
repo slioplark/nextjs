@@ -1,5 +1,4 @@
 import AppProviders from '@app/components/AppProviders';
-import AppShell from '@app/components/AppShell';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import type { Metadata } from 'next';
 import './globals.css';
@@ -15,7 +14,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <AppProviders>
-            <AppShell>{children}</AppShell>
+            {children}
           </AppProviders>
         </AppRouterCacheProvider>
       </body>
