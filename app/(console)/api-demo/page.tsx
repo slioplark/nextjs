@@ -31,8 +31,12 @@ type MutationArg = {
 };
 
 async function mutateTodo(_key: string, { arg }: { arg: MutationArg }) {
-  if (arg.method === "POST") return api.post<Todo, unknown>(arg.path, arg.body);
-  if (arg.method === "PUT") return api.put<Todo, unknown>(arg.path, arg.body);
+  if (arg.method === "POST") return api.post<Todo,
+  unknown
+>(arg.path, arg.body);
+  if (arg.method === "PUT") return api.put<Todo,
+  unknown
+>(arg.path, arg.body);
   return api.delete<unknown>(arg.path);
 }
 
@@ -98,107 +102,139 @@ export default function ApiDemoPage() {
   }
 
   return (
-    <Stack spacing={3}>
+    <Stack
+      spacing={3}
+    >
       <Box>
-        <Typography variant="h4" component="h1" fontWeight={800}>
+        <Typography
+          variant="h4"
+          component="h1"
+          fontWeight={800}
+        >
           API 串接範例
         </Typography>
-        <Typography color="text.secondary" sx={{ mt: 1 }}>
+        <Typography
+          sx={{ mt: 1 }}
+          color="text.secondary"
+        >
           GET 由 SWR 讀取與快取；POST、PUT、DELETE 使用共用 API client 與
           useSWRMutation。
         </Typography>
       </Box>
-      <Paper variant="outlined" sx={{ p: { xs: 2, sm: 3 } }}>
+      <Paper
+        sx={{ p: { xs: 2, sm: 3 } }}
+        variant="outlined"
+      >
         <Stack
-          direction={{ xs: "column", sm: "row" }}
-          justifyContent="space-between"
-          alignItems={{ xs: "stretch", sm: "center" }}
           spacing={2}
+          direction={{ xs: "column", sm: "row" }}
+          alignItems={{ xs: "stretch", sm: "center" }}
+          justifyContent="space-between"
         >
           <Box>
-            <Typography variant="h6" fontWeight={700}>
+            <Typography
+              variant="h6"
+              fontWeight={700}
+            >
               Todos
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              color="text.secondary"
+              variant="body2"
+            >
               Endpoint: {endpoint}
             </Typography>
           </Box>
           <Button
-            variant="outlined"
-            startIcon={<RefreshRoundedIcon />}
             onClick={() => mutate()}
+            variant="outlined"
             disabled={isLoading}
+            startIcon={<RefreshRoundedIcon />}
           >
             重新載入
           </Button>
         </Stack>
         <Box
-          component="form"
-          onSubmit={handleCreate}
           sx={{
             display: "flex",
             gap: 1.5,
             mt: 3,
             flexDirection: { xs: "column", sm: "row" },
           }}
+          onSubmit={handleCreate}
+          component="form"
         >
           <TextField
-            label="新增項目名稱"
             size="small"
+            label="新增項目名稱"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             required
             fullWidth
           />
           <Button
+            sx={{ flexShrink: 0 }}
             type="submit"
             variant="contained"
-            startIcon={<AddRoundedIcon />}
             disabled={isMutating}
-            sx={{ flexShrink: 0 }}
+            startIcon={<AddRoundedIcon />}
           >
             新增 (POST)
           </Button>
         </Box>
         {message && (
-          <Alert severity="success" sx={{ mt: 2 }}>
+          <Alert
+            sx={{ mt: 2 }}
+            severity="success"
+          >
             {message}
           </Alert>
         )}
         {mutationError && (
-          <Alert severity="error" sx={{ mt: 2 }}>
+          <Alert
+            sx={{ mt: 2 }}
+            severity="error"
+          >
             {errorMessage(mutationError)}
           </Alert>
         )}
         {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
+          <Alert
+            sx={{ mt: 2 }}
+            severity="error"
+          >
             {errorMessage(error)}
           </Alert>
         )}
         {isLoading ? (
           <Stack
-            direction="row"
-            spacing={1.5}
-            alignItems="center"
             sx={{ py: 5, justifyContent: "center" }}
+            spacing={1.5}
+            direction="row"
+            alignItems="center"
           >
-            <CircularProgress size={22} />
-            <Typography color="text.secondary">正在載入資料…</Typography>
+            <CircularProgress
+              size={22}
+            />
+            <Typography
+              color="text.secondary"
+            >正在載入資料…</Typography>
           </Stack>
         ) : data ? (
           data.length === 0 ? (
             <Typography
-              color="text.secondary"
               sx={{ py: 4, textAlign: "center" }}
+              color="text.secondary"
             >
               目前沒有資料。
             </Typography>
           ) : (
-            <Stack spacing={1.5} sx={{ mt: 3 }}>
+            <Stack
+              sx={{ mt: 3 }}
+              spacing={1.5}
+            >
               {data.map((todo, index) => (
                 <Paper
-                  key={todo.id ?? index}
-                  variant="outlined"
                   sx={{
                     p: 2,
                     display: "flex",
@@ -207,30 +243,42 @@ export default function ApiDemoPage() {
                     justifyContent: "space-between",
                     flexDirection: { xs: "column", sm: "row" },
                   }}
+                  key={todo.id ?? index}
+                  variant="outlined"
                 >
-                  <Box sx={{ minWidth: 0 }}>
-                    <Typography fontWeight={600}>
+                  <Box
+                    sx={{ minWidth: 0 }}
+                  >
+                    <Typography
+                      fontWeight={600}
+                    >
                       {todo.title ?? todo.name ?? `Item ${todo.id}`}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary">
+                    <Typography
+                      color="text.secondary"
+                      variant="caption"
+                    >
                       ID: {todo.id}
                     </Typography>
                   </Box>
-                  <Stack direction="row" spacing={1}>
+                  <Stack
+                    spacing={1}
+                    direction="row"
+                  >
                     <Button
                       size="small"
+                      onClick={() => handleUpdate(todo)}
                       variant="outlined"
                       disabled={isMutating}
-                      onClick={() => handleUpdate(todo)}
                     >
                       更新 (PUT)
                     </Button>
                     <Button
                       size="small"
                       color="error"
+                      onClick={() => handleDelete(todo)}
                       variant="outlined"
                       disabled={isMutating}
-                      onClick={() => handleDelete(todo)}
                     >
                       刪除 (DELETE)
                     </Button>
@@ -241,9 +289,9 @@ export default function ApiDemoPage() {
           )
         ) : null}
         <Typography
-          variant="caption"
-          color="text.secondary"
           sx={{ display: "block", mt: 3 }}
+          color="text.secondary"
+          variant="caption"
         >
           此範例預期 API 提供 GET/POST {endpoint} 與 PUT/DELETE {endpoint}/:id。
         </Typography>

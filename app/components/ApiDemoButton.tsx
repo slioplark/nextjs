@@ -7,11 +7,11 @@ import Link from "next/link";
 export default function ApiDemoButton() {
   return (
     <Button
-      component={Link}
-      href="/api-demo"
-      variant="contained"
-      endIcon={<ArrowForwardRoundedIcon />}
       sx={{ mt: 3 }}
+      href="/api-demo"
+      endIcon={<ArrowForwardRoundedIcon />}
+      variant="contained"
+      component={Link}
     >
       查看 API 範例
     </Button>

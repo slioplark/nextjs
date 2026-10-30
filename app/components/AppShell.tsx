@@ -48,9 +48,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
       </Toolbar>
       <Box sx={{ px: 2, pt: 2 }}>
         <Typography
-          variant="overline"
-          color="text.secondary"
           sx={{ px: 1.5, letterSpacing: 1.2 }}
+          color="text.secondary"
+          variant="overline"
         >
           WORKSPACE
         </Typography>
@@ -59,11 +59,6 @@ export default function AppShell({ children }: { children: ReactNode }) {
             const selected = pathname === href;
             return (
               <ListItemButton
-                key={href}
-                component={Link}
-                href={href}
-                selected={selected}
-                onClick={() => setMobileOpen(false)}
                 sx={{
                   borderRadius: 2,
                   mb: 0.5,
@@ -74,6 +69,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
                     "&:hover": { bgcolor: "primary.dark" },
                   },
                 }}
+                key={href}
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                selected={selected}
+                component={Link}
               >
                 <ListItemIcon sx={{ minWidth: 40, color: "inherit" }}>
                   <Icon fontSize="small" />
@@ -93,7 +93,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </List>
       </Box>
       <Box sx={{ position: "absolute", bottom: 20, left: 24, right: 24 }}>
-        <Typography variant="caption" color="text.secondary">
+        <Typography color="text.secondary" variant="caption">
           Next.js · MUI · SWR
         </Typography>
       </Box>
@@ -103,21 +103,21 @@ export default function AppShell({ children }: { children: ReactNode }) {
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <AppBar
-        position="fixed"
-        color="inherit"
-        elevation={0}
         sx={{
           display: { md: "none" },
           borderBottom: "1px solid",
           borderColor: "divider",
         }}
+        color="inherit"
+        position="fixed"
+        elevation={0}
       >
         <Toolbar>
           <IconButton
+            sx={{ mr: 1 }}
             edge="start"
             onClick={() => setMobileOpen(true)}
             aria-label="開啟導覽選單"
-            sx={{ mr: 1 }}
           >
             <MenuIcon />
           </IconButton>
@@ -125,15 +125,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </Toolbar>
       </AppBar>
       <Box
-        component="nav"
         sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
+        component="nav"
         aria-label="主導覽"
       >
         <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={() => setMobileOpen(false)}
-          ModalProps={{ keepMounted: true }}
           sx={{
             display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
@@ -141,12 +137,14 @@ export default function AppShell({ children }: { children: ReactNode }) {
               boxSizing: "border-box",
             },
           }}
+          open={mobileOpen}
+          onClose={() => setMobileOpen(false)}
+          variant="temporary"
+          ModalProps={{ keepMounted: true }}
         >
           {drawer}
         </Drawer>
         <Drawer
-          variant="permanent"
-          open
           sx={{
             display: { xs: "none", md: "block" },
             "& .MuiDrawer-paper": {
@@ -156,18 +154,20 @@ export default function AppShell({ children }: { children: ReactNode }) {
               borderColor: "divider",
             },
           }}
+          open
+          variant="permanent"
         >
           {drawer}
         </Drawer>
       </Box>
       <Box
-        component="main"
         sx={{
           flexGrow: 1,
           minWidth: 0,
           px: { xs: 2, sm: 3, lg: 5 },
           py: { xs: 10, md: 5 },
         }}
+        component="main"
       >
         {children}
       </Box>
