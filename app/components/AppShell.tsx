@@ -32,7 +32,8 @@ const navItems: { label: string; href: string; icon: SvgIconComponent }[] = [
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [accountMenuAnchor, setAccountMenuAnchor] = useState<HTMLElement | null>(null);
+  const [accountMenuAnchor, setAccountMenuAnchor] =
+    useState<HTMLElement | null>(null);
   const router = useRouter();
   const pathname = usePathname();
   const accountName = "使用者";
@@ -206,8 +207,22 @@ export default function AppShell({ children }: { children: ReactNode }) {
               onClose={() => setAccountMenuAnchor(null)}
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               transformOrigin={{ vertical: "top", horizontal: "right" }}
+              slotProps={{ paper: { sx: { mt: 1 } } }}
             >
-              <MenuItem disabled>{accountName}</MenuItem>
+              <MenuItem sx={{ gap: 1.5, opacity: 1 }}>
+                <Avatar
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    bgcolor: "primary.main",
+                    color: "primary.contrastText",
+                    fontSize: 14,
+                  }}
+                >
+                  {accountName.slice(0, 1)}
+                </Avatar>
+                <ListItemText primary={accountName} />
+              </MenuItem>
               <MenuItem
                 onClick={() => {
                   setAccountMenuAnchor(null);
