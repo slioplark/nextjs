@@ -1,4 +1,4 @@
-import ApiDemoButton from "@app/components/ApiDemoButton";
+import ApiDemoButton from "./components/ApiDemoButton";
 import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
 
 const foundations = [
