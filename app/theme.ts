@@ -10,7 +10,7 @@ const theme = createTheme({
   },
   shape: { borderRadius: 12 },
   typography: {
-    fontFamily: "monospace",
+    fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
     button: { textTransform: "none", fontWeight: 600 },
   },
 });
